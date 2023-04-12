@@ -1,0 +1,65 @@
+* {
+	padding: 0; margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: rgb(7, 18, 13);
+	font-family: monospace;
+}
+
+#heading_container {
+	width: 540px;
+	height: 120px;
+	border-bottom: 5px double white;
+	margin: 2px auto;
+	padding-top: 20px;
+}
+
+.heading-text {
+	text-align: center;
+	color: ghostwhite;
+}
+
+#heading {
+	font-size: 2.25rem;
+}
+
+#description {
+	font-size: 1.10rem;
+	color: rgb(55, 250, 130);
+}
+
+#cal_container {
+	background-color: white;
+	width: 560px; height: 675px;
+	margin: 10px auto;
+}
+
+#cal_display {
+	width: 100%; height: 150px;
+	border-bottom: 2px solid rgb(7, 18, 13);
+}
+
+#buttons {
+	width: 100%; height: 600px;
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+}
+
+.subnum-container {
+	height: 124px; width: 100%;
+	padding-top: 10px;
+}
+
+#numbers .subnum-container>.btn {
+	height: 100%; width: 110px;
+}
+
+#numbers .subnum-container {
+	padding-left: 10px;
+}
+
+#operators_and_functions .subnum-container>.btn {
+	height: 100%; width: 85px;
+}
