@@ -39,6 +39,31 @@ body {
 #cal_display {
 	width: 100%; height: 150px;
 	border-bottom: 2px solid rgb(7, 18, 13);
+	display: grid;
+	grid-template-rows: 2fr 1fr;
+}
+
+#calculation, #result {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+
+#calculation {
+	font-size: 2.5rem;
+	width: 100%;
+	border: none;
+	text-align: right;
+}
+
+#calculation:focus {
+	outline: none;
+}
+
+#result {
+	font-size: 1.85rem;
+	color: rgb(145, 145, 145);
 }
 
 #buttons {

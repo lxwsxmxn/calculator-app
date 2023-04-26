@@ -18,7 +18,10 @@
 		</header>
 		
 		<div id="cal_container">
-			<section id="cal_display"></section> 
+			<section id="cal_display">
+				<input id="calculation" type="text" />
+				<div id="result"></div>
+			</section> 
 			<section id="buttons">
 				<section id="numbers">
 					<section id="num789" class="subnum-container">
@@ -45,7 +48,7 @@
 				<section id="operators_and_functions">
 					<section id="dnm" class="subnum-container">
 						<button type="button" id="btn_division" class="btn">/</button>
-						<button type="button" id="btn_multiple" class="btn">x</button>
+						<button type="button" id="btn_multiple" class="btn">*</button>
 					</section>
 					<section id="sna" class="subnum-container">
 						<button type="button" id="btn_subtract" class="btn">-</button>
@@ -59,6 +62,54 @@
 						<button type="button" id="btn_equal" class="btn">=</button>
 					</section>
 				</section>
+				
+				<script>
+					// This piece of code is responsible for the click event on the buttons
+					const btn_container = document.getElementById("buttons");
+					const btn_rgx = /btn_+/;
+					
+					btn_container.addEventListener("click", event => {
+						if (btn_rgx.test(event.target.id)) {
+							console.log(event);
+							captureButton(event);
+						}
+					});
+
+					const select_cal_display = document.getElementById("calculation");
+					const key_rgx = /[0-9]|[+-/\*]|Backspace|Enter|ArrowLeft|ArrowRight/;
+
+					select_cal_display.addEventListener("keydown", event => {
+						console.log(event);
+						if (key_rgx.test(event.key)) {
+							if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+								if (event.key === "ArrowLeft") {
+									if (select_cal_display.selectionStart-1 > -1) {
+										caret_position = select_cal_display.selectionStart-1;
+									}
+									console.log(caret_position);
+								}
+								if (event.key === "ArrowRight") {
+									if (select_cal_display.selectionStart < select_cal_display.value.length) {
+										caret_position = select_cal_display.selectionStart+1;
+									}
+									console.log(caret_position);
+								}
+							}
+							else {
+								console.log(event.key);
+								captureButton(event);
+							}
+						}
+						else {
+							event.preventDefault();
+						}
+					});
+					
+					select_cal_display.addEventListener("click", event => {
+						caret_position = select_cal_display.selectionStart;
+					});
+				</script>
+				
 			</section>
 		</div>
 	</body>
