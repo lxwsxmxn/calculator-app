@@ -64,7 +64,6 @@
 				</section>
 				
 				<script>
-					// This piece of code is responsible for the click event on the buttons
 					const btn_container = document.getElementById("buttons");
 					const btn_rgx = /btn_+/;
 					
@@ -108,6 +107,10 @@
 					select_cal_display.addEventListener("click", event => {
 						caret_position = select_cal_display.selectionStart;
 					});
+
+
+					select_cal_display.selectionStart = select_cal_display.value.lenght-1;
+					caret_position = select_cal_display.selectionStart;
 				</script>
 				
 			</section>
