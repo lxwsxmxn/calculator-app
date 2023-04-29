@@ -94,6 +94,11 @@
 									console.log(caret_position);
 								}
 							}
+							else if (ope_rgx.test(event.key) && (ope_rgx.test([...select_cal_display.value][select_cal_display.selectionStart]) || ope_rgx.test([...select_cal_display.value][select_cal_display.selectionStart-1]))) {
+								console.log("success");
+								event.preventDefault();
+								return null;
+							}
 							else {
 								console.log(event.key);
 								captureButton(event);
