@@ -1,4 +1,4 @@
-let caret_position; // holds the position of the carets recent position
+let caret_position; // holds the position of the carets
 const ope_rgx = /[+*-\/]/; // operator regex
 
 function captureButton(btn) {
@@ -14,7 +14,7 @@ function captureButton(btn) {
 }
 
 function displayCalculation(captured_value) {
-	const select_cd = document.getElementById("calculation"); // cd=calculation display
+	const select_cd = document.getElementById("calculation");
 	let temp_arr = [...select_cd.value];
 	if (captured_value === "DEL" || captured_value === "CE") {
 		if (captured_value === "DEL") {
@@ -34,12 +34,26 @@ function displayCalculation(captured_value) {
 	}
 	else {
 		if (select_cd.value.length === 0 || caret_position === select_cd.value.length-1) {
-			select_cd.value = select_cd.value + captured_value;
-			caret_position = select_cd.value.length-1;
+			const append = function() {
+				select_cd.value = select_cd.value + captured_value;
+				caret_position = select_cd.value.length-1;
+			}
+			if (ope_rgx.test(captured_value) && ope_rgx.test(temp_arr[caret_position])) {
+				if (captured_value === "-" && temp_arr[caret_position] != "-") {
+					append();
+					console.log("negative int with on-screen buttons: success");
+				}
+				return null;
+			}
+			else {
+				append();
+			}
 		}
 		else {
 			if (ope_rgx.test(captured_value) && (ope_rgx.test(temp_arr[caret_position]) || ope_rgx.test(temp_arr[caret_position-1]))) {
-				console.log(captured_value);
+				if (captured_value === "-" && temp_arr[caret_position-1] != "-" && ope_rgx.test(temp_arr[caret_position]) != true) {
+					console.log("negative int with on-screen buttons: success");
+				}
 				return null;
 			}
 			else {
@@ -55,9 +69,14 @@ function displayCalculation(captured_value) {
 function displayResult() {
 	const select_cd = document.getElementById("calculation");
 	const select_rd = document.getElementById("result");
-	if (select_cd.value.length > 0) {
-		select_rd.innerHTML = `${eval(select_cd.value)}`;
-		select_cd.value = eval(select_cd.value);
+	if (select_cd.value.length > 0 && ope_rgx.test(select_cd.value[select_cd.value.length-1]) === false) {
+		try {
+			select_rd.innerHTML = `${eval(select_cd.value)}`;
+			select_cd.value = eval(select_cd.value);
+		}
+		catch (error) {
+			select_rd.innerHTML = "ERROR!"
+		}
 	}
 	else {
 		select_rd.innerHTML = "";

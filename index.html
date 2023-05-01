@@ -59,7 +59,9 @@
 						<button type="button" id="btn_clear_everything" class="btn">CE</button>
 					</section>
 					<section id="equal" class="subnum-container">
-						<button type="button" id="btn_equal" class="btn">=</button>
+						<button type="button" id="btn_equal" class="btn btn-style">=</button>
+						<button type="button" id="btn_open_parentheses" class="parentheses-btn">(</button>
+						<button type="button" id="btn_closing_parentheses" class="parentheses-btn">)</button>
 					</section>
 				</section>
 				
@@ -74,30 +76,36 @@
 						}
 					});
 
-					const select_cal_display = document.getElementById("calculation");
-					const key_rgx = /[0-9]|[+-/\*]|Backspace|Enter|ArrowLeft|ArrowRight/;
+					const scd = document.getElementById("calculation");
+					const key_rgx = /[0-9]|[+-/\*()=]|Backspace|Enter|ArrowLeft|ArrowRight/;
 
-					select_cal_display.addEventListener("keydown", event => {
+					scd.addEventListener("keydown", event => {
 						console.log(event);
+						let val_arr = [...scd.value];
 						if (key_rgx.test(event.key)) {
 							if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
 								if (event.key === "ArrowLeft") {
-									if (select_cal_display.selectionStart-1 > -1) {
-										caret_position = select_cal_display.selectionStart-1;
+									if (scd.selectionStart-1 > -1) {
+										caret_position = scd.selectionStart-1;
 									}
 									console.log(caret_position);
 								}
 								if (event.key === "ArrowRight") {
-									if (select_cal_display.selectionStart < select_cal_display.value.length) {
-										caret_position = select_cal_display.selectionStart+1;
+									if (scd.selectionStart < scd.value.length) {
+										caret_position = scd.selectionStart+1;
 									}
 									console.log(caret_position);
 								}
 							}
-							else if (ope_rgx.test(event.key) && (ope_rgx.test([...select_cal_display.value][select_cal_display.selectionStart]) || ope_rgx.test([...select_cal_display.value][select_cal_display.selectionStart-1]))) {
-								console.log("success");
-								event.preventDefault();
-								return null;
+							else if (ope_rgx.test(event.key) && (ope_rgx.test(val_arr[scd.selectionStart]) || ope_rgx.test(val_arr[scd.selectionStart-1]))) {
+								if (event.key === "-" && val_arr[scd.selectionStart-1] != "-" && ope_rgx.test(val_arr[scd.selectionStart]) != true) {
+									console.log("negative int with key strokes: success");
+									return null;
+								}
+								else {
+									console.log("success");
+									event.preventDefault();
+								}
 							}
 							else {
 								console.log(event.key);
@@ -109,13 +117,13 @@
 						}
 					});
 					
-					select_cal_display.addEventListener("click", event => {
-						caret_position = select_cal_display.selectionStart;
+					scd.addEventListener("click", event => {
+						caret_position = scd.selectionStart;
 					});
 
 
-					select_cal_display.selectionStart = select_cal_display.value.lenght-1;
-					caret_position = select_cal_display.selectionStart;
+					scd.selectionStart = scd.value.lenght-1;
+					caret_position = scd.selectionStart;
 				</script>
 				
 			</section>
